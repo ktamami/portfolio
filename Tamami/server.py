@@ -3,6 +3,7 @@ import datetime
 from twilio.rest import Client
 import os
 from dotenv import load_dotenv
+import time
 load_dotenv()
 
 tamami = os.environ.get("TAMAMI")
@@ -20,7 +21,7 @@ def contact():
         name = request.form.get("name")
         email = request.form.get("email")
         message = request.form.get("message")
-        my_msg = (f"🍕\nYay!\n"
+        my_msg = (f"🍕\n"
                   f"{name}さん\n"
                   f"{email}\n"
                   f"{message}")
@@ -30,6 +31,7 @@ def contact():
             body=my_msg,
             to=phone
         )
+        time.sleep(10)
         return render_template("index.html", year=current_year, tamami=tamami)
     return render_template("index.html", year=current_year, tamami=tamami)
 if __name__ == "__main__":
