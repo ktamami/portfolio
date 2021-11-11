@@ -8,8 +8,8 @@ import os
 # load_dotenv()
 from boto.s3.connection import S3Connection
 
-my_email = S3Connection(os.environ.get("MAIL_FROM"))
-password = S3Connection(os.environ.get("PASS"))
+my_email = S3Connection(os.environ["MAIL_FROM"])
+password = S3Connection(os.environ["PASS"])
 address_list = [
     S3Connection(os.environ.get("MAIL_TO")),
     ]
