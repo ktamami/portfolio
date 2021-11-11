@@ -4,6 +4,8 @@ import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 my_email = os.environ.get("MAIL_FROM")
 password = os.environ.get("PASS")
@@ -20,10 +22,11 @@ def home():
     current_year = datetime.datetime.now().year
     return render_template("index.html", year=current_year)
 
-@app.route("/contact", methods=["GET", "POST"])
+@app.route("/#contact", methods=["GET", "POST"])
 def contact():
     current_year = datetime.datetime.now().year
     if request.method == "POST":
+        print(password)
         name = request.form.get("name")
         email = request.form.get("email")
         message = request.form.get("message")
