@@ -26,7 +26,6 @@ def home():
 def contact():
     current_year = datetime.datetime.now().year
     if request.method == "POST":
-        print(password)
         name = request.form.get("name")
         email = request.form.get("email")
         message = request.form.get("message")
