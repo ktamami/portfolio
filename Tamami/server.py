@@ -16,12 +16,6 @@ charset = "iso-2022-jp"
 
 app = Flask(__name__)
 
-
-@app.route("/")
-def home():
-    current_year = datetime.datetime.now().year
-    return render_template("index.html", year=current_year)
-
 @app.route("/", methods=["GET", "POST"])
 def contact():
     current_year = datetime.datetime.now().year
