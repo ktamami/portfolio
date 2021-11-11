@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 import time
 load_dotenv()
 
-tamami = os.environ.get("TAMAMI")
 twilio_sid = os.environ.get("TWILIO_SID")
 twilio_token = os.environ.get("TWILIO_TOKEN")
 messaging_service_sid = os.environ.get("MESSAGING_SERVICE_SID")
@@ -32,7 +31,7 @@ def contact():
             to=phone
         )
         time.sleep(10)
-        return render_template("index.html", year=current_year, tamami=tamami)
-    return render_template("index.html", year=current_year, tamami=tamami)
+        return render_template("index.html", year=current_year)
+    return render_template("index.html", year=current_year)
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
