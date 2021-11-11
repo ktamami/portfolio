@@ -4,9 +4,6 @@ import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 my_email = os.environ.get("MAIL_FROM")
 password = os.environ.get("PASS")
