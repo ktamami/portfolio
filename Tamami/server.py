@@ -5,12 +5,14 @@ from email.mime.text import MIMEText
 from email.header import Header
 import os
 from dotenv import load_dotenv
+from boto.s3.connection import S3Connection
+
 load_dotenv()
 
-my_email = os.environ["MAIL_FROM"]
-password = os.environ["PASS"]
+my_email = S3Connection(os.environ["MAIL_FROM"])
+password = S3Connection(os.environ["PASS"])
 address_list = [
-    os.environ["MAIL_TO"],
+    S3Connection(os.environ["MAIL_TO"])
     ]
 charset = "iso-2022-jp"
 
