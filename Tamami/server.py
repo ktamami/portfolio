@@ -39,7 +39,7 @@ def contact():
             connection.starttls()
             connection.login(user=my_email, password=password)
             connection.sendmail(from_addr=my_email, to_addrs=address_list, msg=my_msg.as_string())
-        return redirect(url_for("home"))
+        return render_template("index.html", year=current_year)
     return render_template("index.html", year=current_year)
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
