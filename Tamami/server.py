@@ -7,10 +7,10 @@ import os
 # from dotenv import load_dotenv
 # load_dotenv()
 
-my_email = os.environ.get("MAIL_FROM")
-password = os.environ.get("PASS")
+my_email = os.environ("MAIL_FROM")
+password = os.environ("PASS")
 address_list = [
-    os.environ.get("MAIL_TO"),
+    os.environ("MAIL_TO"),
     ]
 charset = "iso-2022-jp"
 
