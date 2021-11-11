@@ -9,7 +9,6 @@ twilio_sid = os.environ.get("TWILIO_SID")
 twilio_token = os.environ.get("TWILIO_TOKEN")
 messaging_service_sid = os.environ.get("MESSAGING_SERVICE_SID")
 phone = os.environ.get("PHONE")
-charset = "iso-2022-jp"
 
 app = Flask(__name__)
 
@@ -25,12 +24,11 @@ def contact():
                   f"メールアドレス：{email}\n"
                   f"メッセージ：　　{message}")
         twilio_client = Client(twilio_sid, twilio_token)
-        message = twilio_client.messages.create(
-                messaging_service_sid=messaging_service_sid,
-                body=my_msg,
-                to=phone
-            )
-        print(message.status)
+        twilio_client.messages.create(
+            messaging_service_sid=messaging_service_sid,
+            body=my_msg,
+            to=phone
+        )
         return render_template("index.html", year=current_year)
     return render_template("index.html", year=current_year)
 if __name__ == "__main__":
