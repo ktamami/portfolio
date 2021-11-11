@@ -1,18 +1,14 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 import datetime
-import smtplib
-from email.mime.text import MIMEText
-from email.header import Header
+from twilio.rest import Client
 import os
 from dotenv import load_dotenv
 load_dotenv()
 
-tamami = os.environ.get("TAMAMI")
-my_email = os.environ.get("MAIL_FROM")
-password = os.environ.get("PASS")
-address_list = [
-    os.environ.get("MAIL_TO")
-    ]
+twilio_sid = os.environ.get("TWILIO_SID")
+twilio_token = os.environ.get("TWILIO_TOKEN")
+messaging_service_sid = os.environ.get("MESSAGING_SERVICE_SID")
+phone = os.environ.get("PHONE")
 charset = "iso-2022-jp"
 
 app = Flask(__name__)
@@ -24,17 +20,18 @@ def contact():
         name = request.form.get("name")
         email = request.form.get("email")
         message = request.form.get("message")
-        my_msg = MIMEText(f"おめでとう！メッセージが来たよ！\n"
-                          f"お名前：　　　　{name}さん\n"
-                          f"メールアドレス：{email}\n"
-                          f"メッセージ：　　{message}",
-                          "plain", charset)
-        my_msg['Subject'] = Header(f"【新着メッセージ】{name}さん", charset)
-        with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
-            connection.starttls()
-            connection.login(user=my_email, password=password)
-            connection.sendmail(from_addr=my_email, to_addrs=address_list, msg=my_msg.as_string())
-        return render_template("index.html", year=current_year, tamami=tamami)
-    return render_template("index.html", year=current_year, tamami=tamami)
+        my_msg = (f"\nおめでとう！メッセージが来たよ！\n"
+                  f"お名前：　　　　{name}さん\n"
+                  f"メールアドレス：{email}\n"
+                  f"メッセージ：　　{message}")
+        twilio_client = Client(twilio_sid, twilio_token)
+        message = twilio_client.messages.create(
+                messaging_service_sid=messaging_service_sid,
+                body=my_msg,
+                to=phone
+            )
+        print(message.status)
+        return render_template("index.html", year=current_year)
+    return render_template("index.html", year=current_year)
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
