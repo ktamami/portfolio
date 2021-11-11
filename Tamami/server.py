@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
+tamami = os.environ.get("TAMAMI")
 twilio_sid = os.environ.get("TWILIO_SID")
 twilio_token = os.environ.get("TWILIO_TOKEN")
 messaging_service_sid = os.environ.get("MESSAGING_SERVICE_SID")
@@ -19,17 +20,17 @@ def contact():
         name = request.form.get("name")
         email = request.form.get("email")
         message = request.form.get("message")
-        my_msg = (f"\nおめでとう！メッセージが来たよ！\n"
-                  f"お名前：　　　　{name}さん\n"
-                  f"メールアドレス：{email}\n"
-                  f"メッセージ：　　{message}")
+        my_msg = (f"🍕\nYay!\n"
+                  f"{name}さん\n"
+                  f"{email}\n"
+                  f"{message}")
         twilio_client = Client(twilio_sid, twilio_token)
         twilio_client.messages.create(
             messaging_service_sid=messaging_service_sid,
             body=my_msg,
             to=phone
         )
-        return render_template("index.html", year=current_year)
-    return render_template("index.html", year=current_year)
+        return render_template("index.html", year=current_year, tamami=tamami)
+    return render_template("index.html", year=current_year, tamami=tamami)
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
