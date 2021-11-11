@@ -22,7 +22,7 @@ def home():
     current_year = datetime.datetime.now().year
     return render_template("index.html", year=current_year)
 
-@app.route("/#contact", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 def contact():
     current_year = datetime.datetime.now().year
     if request.method == "POST":
