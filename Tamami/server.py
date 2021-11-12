@@ -1,17 +1,15 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 import datetime
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
 import os
-# from dotenv import load_dotenv
-# load_dotenv()
+from dotenv import load_dotenv
+load_dotenv()
 
-my_email = os.environ.get("MAIL_FROM")
+mail_from = os.environ.get("MAIL_FROM")
 password = os.environ.get("PASS")
-address_list = [
-    os.environ.get("MAIL_TO")
-    ]
+mail_to = os.environ.get("MAIL_TO")
 charset = "iso-2022-jp"
 
 app = Flask(__name__)
@@ -31,9 +29,9 @@ def contact():
         my_msg['Subject'] = Header(f"【新着メッセージ】{name}さん", charset)
         with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
             connection.starttls()
-            connection.login(user=my_email, password=password)
-            connection.sendmail(from_addr=my_email, to_addrs=address_list, msg=my_msg.as_string())
+            connection.login(user=mail_from, password=password)
+            connection.sendmail(from_addr=mail_from, to_addrs=mail_to, msg=my_msg.as_string())
         return render_template("index.html", year=current_year)
     return render_template("index.html", year=current_year)
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5000)
