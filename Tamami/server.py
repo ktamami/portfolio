@@ -1,15 +1,18 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import datetime
-from twilio.rest import Client
+import smtplib
+from email.mime.text import MIMEText
+from email.header import Header
 import os
-from dotenv import load_dotenv
-import time
-load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv()
 
-twilio_sid = os.environ.get("TWILIO_SID")
-twilio_token = os.environ.get("TWILIO_TOKEN")
-messaging_service_sid = os.environ.get("MESSAGING_SERVICE_SID")
-phone = os.environ.get("PHONE")
+my_email = os.environ.get("MAIL_FROM")
+password = os.environ.get("PASS")
+address_list = [
+    os.environ.get("MAIL_TO")
+    ]
+charset = "iso-2022-jp"
 
 app = Flask(__name__)
 
@@ -20,17 +23,16 @@ def contact():
         name = request.form.get("name")
         email = request.form.get("email")
         message = request.form.get("message")
-        my_msg = (f"🍕\n"
-                  f"{name}さん\n"
-                  f"{email}\n"
-                  f"{message}")
-        twilio_client = Client(twilio_sid, twilio_token)
-        twilio_client.messages.create(
-            messaging_service_sid=messaging_service_sid,
-            body=my_msg,
-            to=phone
-        )
-        time.sleep(10)
+        my_msg = MIMEText(f"おめでとう！メッセージが来たよ！\n"
+                          f"お名前：　　　　{name}さん\n"
+                          f"メールアドレス：{email}\n"
+                          f"メッセージ：　　{message}",
+                          "plain", charset)
+        my_msg['Subject'] = Header(f"【新着メッセージ】{name}さん", charset)
+        with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
+            connection.starttls()
+            connection.login(user=my_email, password=password)
+            connection.sendmail(from_addr=my_email, to_addrs=address_list, msg=my_msg.as_string())
         return render_template("index.html", year=current_year)
     return render_template("index.html", year=current_year)
 if __name__ == "__main__":
