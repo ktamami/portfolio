@@ -21,12 +21,12 @@ def contact():
         name = request.form.get("name")
         email = request.form.get("email")
         message = request.form.get("message")
-        my_msg = MIMEText(f"おめでとう！メッセージが来たよ！\n"
+        my_msg = MIMEText(f"おめでとう！メッセージが来たよ！\n\n"
                           f"お名前：　　　　{name}さん\n"
                           f"メールアドレス：{email}\n"
                           f"メッセージ：　　{message}",
                           "plain", charset)
-        my_msg['Subject'] = Header(f"【新着メッセージ】{name}さん", charset)
+        my_msg['Subject'] = Header(f"【🍕新着🍕】{name}さん", charset)
         with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
             connection.starttls()
             connection.login(user=mail_from, password=password)
