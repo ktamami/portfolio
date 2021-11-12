@@ -26,7 +26,7 @@ def contact():
                           f"メールアドレス：{email}\n"
                           f"メッセージ：　　{message}",
                           "plain", charset)
-        my_msg['Subject'] = Header(f"【🍕新着🍕】{name}さん", charset)
+        my_msg['Subject'] = Header(f"【新着】{name}さん", charset)
         with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
             connection.starttls()
             connection.login(user=mail_from, password=password)
