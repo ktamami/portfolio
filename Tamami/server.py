@@ -17,7 +17,7 @@ def contact():
         text = f"📩 You got a message via 🍕\n\n" \
                f"Name: {name} san\n" \
                f"Email: {email}\n" \
-               f"Message: {message}"
+               f"{message}"
         notification_manager.send_whatsapp(text)
         return render_template("index.html", year=current_year)
     return render_template("index.html", year=current_year)
