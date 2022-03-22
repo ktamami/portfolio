@@ -16,10 +16,9 @@ class NotificationManager:
     def __init__(self):
         self.client = Client(TWILIO_SID, TWILIO_AUTH_TOKEN)
 
-    def send_whatsapp(self, text):
-        message = self.client.messages.create(
+    def send_sms(self, text):
+        self.client.messages.create(
             from_=TWILIO_FROM,
             body=text,
             to=TWILIO_TO
         )
-        print(message.sid)
