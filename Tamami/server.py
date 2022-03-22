@@ -18,7 +18,7 @@ def contact():
                f"Name: {name} san\n" \
                f"Email: {email}\n" \
                f"{message}"
-        notification_manager.send_whatsapp(text)
+        notification_manager.send_sms(text)
         return render_template("index.html", year=current_year)
     return render_template("index.html", year=current_year)
 
