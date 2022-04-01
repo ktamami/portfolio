@@ -3,8 +3,6 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-# This is for messaging me when ideco assets rises.
-
 TWILIO_SID = os.environ.get("TWILIO_SID")
 TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN")
 TWILIO_FROM = os.environ.get("TWILIO_FROM")
