@@ -13,9 +13,9 @@ def contact():
         name = request.form.get("name")
         email = request.form.get("email")
         message = request.form.get("message")
-        text = f"📩 You got a message via 🍕\n\n" \
-               f"Name: {name} san\n" \
-               f"Email: {email}\n" \
+        text = f"📩 Message via 🍕\n\n" \
+               f"{name} san\n" \
+               f"{email}\n" \
                f"{message}"
         notification_manager.send_sms(text)
         return render_template("index.html", year=current_year)
